@@ -32,11 +32,8 @@
     }
     int i = 1; //первые два сравнили - начинаем с третьего числа
     int num = secondMaxNum;
-    //        Console.WriteLine ("i="+i+", num="+num);
-
     while ((num != 0)&(i <= numbersArray.Count()-1)) //Сравниваем только числа, которые перечислены до первого нуля в строке. Как только встречаем ноль - сравнение заканчивается. Если ноля нет - сравниваем все числа.
     {
-        Console.WriteLine ("i="+i+", num="+num);
         if (i != numbersArray.Count()-1)  // иначе - последняя итерация - следующего элемента массива не существует
             num = Convert.ToInt32(numbersArray[i+1]);
         if ( num >= firstMaxNum)
