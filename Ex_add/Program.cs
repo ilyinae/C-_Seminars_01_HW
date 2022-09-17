@@ -16,26 +16,39 @@
     var sr = new StreamReader("input.txt");
     // Сохраняем строку входных чисел в переменной для вывода результата
     string initialString = sr.ReadToEnd();
-    //Пишем строку в массив
+    //Пишем строку в массив, разделители - пробелы
     string[] numbersArray = initialString.Split(' ');
     
-    int i = 0;
-    //Первый и второй максимум - первый элемент массива
-    int firstMaxNum = Convert.ToInt32(numbersArray[0]);
-    int secondMaxNum = Convert.ToInt32(numbersArray[0]);
-
-    while (Convert.ToInt32(numbersArray[i]) != 0) //Сравниваем только числа, которые перечислены до первого нуля в строке. Как только встречаем ноль - сравнение заканчивается
+    
+    int tmp = 0;
+    //Первый и второй максимум - нулевой элемент массива
+    int firstMaxNum = Convert.ToInt32(numbersArray[0]); //объявляем нулевой элемент максимальным
+    int secondMaxNum = Convert.ToInt32(numbersArray[1]); //второй максимум равен первому элементу
+    if (secondMaxNum>firstMaxNum) //если второе больше первого - меняем местами
     {
-        if (Convert.ToInt32(numbersArray[i]) > firstMaxNum)
+        tmp = firstMaxNum;
+        firstMaxNum = secondMaxNum;
+        secondMaxNum = tmp;
+    }
+    int i = 1; //первые два сравнили - начинаем с третьего числа
+    int num = secondMaxNum;
+    //        Console.WriteLine ("i="+i+", num="+num);
+
+    while ((num != 0)&(i <= numbersArray.Count()-1)) //Сравниваем только числа, которые перечислены до первого нуля в строке. Как только встречаем ноль - сравнение заканчивается. Если ноля нет - сравниваем все числа.
+    {
+        Console.WriteLine ("i="+i+", num="+num);
+        if (i != numbersArray.Count()-1)  // иначе - последняя итерация - следующего элемента массива не существует
+            num = Convert.ToInt32(numbersArray[i+1]);
+        if ( num >= firstMaxNum)
         {
             secondMaxNum = firstMaxNum;
-            firstMaxNum = Convert.ToInt32(numbersArray[i]);
+            firstMaxNum = num;
         }  
         else
         {
-            if (Convert.ToInt32(numbersArray[i])>secondMaxNum)
-                secondMaxNum = Convert.ToInt32(numbersArray[i]);
-        }    
+            if (num >= secondMaxNum)
+                secondMaxNum = num;
+        }   
         i++;
     }
 
@@ -45,6 +58,3 @@
 // Используя StreamWriter перезаписываем содержимое файла output.txt
 using (StreamWriter writer = new StreamWriter("output.txt", false))
     await writer.WriteAsync(outString);
-
-   
-  
